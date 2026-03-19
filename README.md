@@ -1,12 +1,34 @@
-# Tomux
+<div align="center">
+
+# 🔲 Tomux
 
 **Real-time AI agent progress in your tmux status bar.**
 
-<!-- Badges: ![TPM](https://img.shields.io/badge/TPM-compatible-green) ![License](https://img.shields.io/badge/license-MIT-blue) ![Bash 3.2+](https://img.shields.io/badge/bash-3.2%2B-brightgreen) -->
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![tmux: 3.2+](https://img.shields.io/badge/tmux-3.2%2B-green.svg)](https://github.com/tmux/tmux)
+[![TPM Compatible](https://img.shields.io/badge/TPM-compatible-brightgreen.svg)](https://github.com/tmux-plugins/tpm)
+[![Bash: 3.2+](https://img.shields.io/badge/bash-3.2%2B-orange.svg)](#)
+[![Tests: 32 passing](https://img.shields.io/badge/tests-32%20passing-success.svg)](#testing)
 
-<!-- TODO: Add screenshot of pips in tmux status bar -->
+<br>
+
+<img src="demo.gif" alt="Tomux demo showing pip progress in tmux status bar" width="700">
+
+<br>
+
+*Phase pips (green) and task pips (blue) updating live as the AI agent works through a plan.*
+
+</div>
+
+---
 
 Tomux is a tmux plugin that visualises [GitHub Copilot CLI](https://githubnext.com/projects/copilot-cli/) agent progress directly in your status bar. When Copilot executes multi-phase plans — clarification questions, parallel research, phased implementation — Tomux renders coloured pips (■□) so you see progress at a glance without leaving the terminal.
+
+```
+■■■□□ ■■■□□□□  Implementing Phase 3
+ ↑       ↑              ↑
+phases  tasks       activity text
+```
 
 ---
 
