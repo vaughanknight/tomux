@@ -1,0 +1,7 @@
+tests/scratch/
+tests/fixtures/*.db
+/tmp/tomux_*
+*.swp
+*.swo
+*~
+.DS_Store
