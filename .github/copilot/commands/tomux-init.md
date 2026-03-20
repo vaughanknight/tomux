@@ -4,8 +4,8 @@ description: Initialize a project for Tomux progress tracking. Copies TOMUX_AGEN
 
 <!-- SESSION_STATE_BEGIN -->
 <!-- Auto-managed by session-state-apply. Do not edit manually. -->
-<!-- On skill entry, the agent should update session_state: -->
-<!-- sql: INSERT OR REPLACE INTO session_state (key, value) VALUES ('current_skill', 'tomux-init'), ('workflow_phase', 'Setup'), ('status', 'in_progress'), ('activity', 'Initializing Tomux tracking'); -->
+<!-- On skill entry, the agent should FIRST create tables, THEN update session_state: -->
+<!-- sql: CREATE TABLE IF NOT EXISTS session_state (key TEXT PRIMARY KEY, value TEXT); CREATE TABLE IF NOT EXISTS phases (id TEXT PRIMARY KEY, name TEXT, ordinal INTEGER, status TEXT DEFAULT 'pending'); INSERT OR REPLACE INTO session_state (key, value) VALUES ('current_skill', 'tomux-init'), ('workflow_phase', 'Setup'), ('status', 'in_progress'), ('activity', 'Initializing Tomux tracking'); -->
 <!-- SESSION_STATE_END -->
 
 # /tomux-init — Initialize Tomux Progress Tracking
