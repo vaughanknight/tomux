@@ -21,10 +21,11 @@ source "${TOMUX_SCRIPT_DIR}/db_query.sh"
 pane_cwd="${1:-$(pwd)}"
 pane_pid=$(tmux display-message -p '#{pane_pid}' 2>/dev/null) || true
 
-# --- Copilot process check ---
+# --- Copilot process check (for staleness, not gating) ---
 
-if [[ -n "$pane_pid" ]] && ! has_copilot_process "$pane_pid"; then
-  exit 0
+copilot_running=0
+if [[ -n "$pane_pid" ]] && has_copilot_process "$pane_pid"; then
+  copilot_running=1
 fi
 
 # --- Session discovery ---
