@@ -147,7 +147,7 @@ if [[ "$has_phases" -eq 1 && "$phase_count" -gt 1 ]]; then
   phase_pips=$(render_with_overflow \
     "$phase_done" "$phase_in_progress" "$phase_blocked" "$phase_count" \
     "$phase_threshold" "$phase_done_colour" "$progress_colour" "$blocked_colour")
-  output="${phase_pips} "
+  output="${phase_pips} │ "
 fi
 
 # Task pips
