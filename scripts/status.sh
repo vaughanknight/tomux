@@ -119,7 +119,8 @@ task_total=0
 if [[ -n "$todos_raw" ]]; then
   while IFS='|' read -r t_id _t_title t_status; do
     # If we have phases and an active phase, filter tasks by phase prefix
-    if [[ "$has_phases" -eq 1 && -n "$active_phase_id" ]]; then
+    # Exception: if all phases are done, show all remaining tasks
+    if [[ "$has_phases" -eq 1 && -n "$active_phase_id" && "$phase_done" -lt "$phase_count" ]]; then
       case "$t_id" in
         "${active_phase_id}"-*) ;;  # Matches active phase
         *) continue ;;              # Skip other phases

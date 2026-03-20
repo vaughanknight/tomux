@@ -67,32 +67,45 @@ render_pips() {
 
   local pip_filled
   local pip_empty
+  local pip_sep
   pip_filled=$(get_tmux_option "@tomux_pip_filled" "■")
   pip_empty=$(get_tmux_option "@tomux_pip_empty" "□")
+  pip_sep=$(get_tmux_option "@tomux_pip_separator" " ")
 
   local pending_colour
   pending_colour=$(colour_code "pending")
 
   local result=""
+  local first=1
+
+  # Helper to append pip with separator
+  _add_pip() {
+    if [[ "$first" -eq 1 ]]; then
+      first=0
+    else
+      result="${result}${pip_sep}"
+    fi
+    result="${result}$1"
+  }
 
   # Done pips
   local count=0
   while [[ "$count" -lt "$done_count" ]]; do
-    result="${result}#[fg=${done_colour}]${pip_filled}"
+    _add_pip "#[fg=${done_colour}]${pip_filled}"
     count=$((count + 1))
   done
 
   # In-progress pips
   count=0
   while [[ "$count" -lt "$in_progress_count" ]]; do
-    result="${result}#[fg=${progress_colour}]${pip_filled}"
+    _add_pip "#[fg=${progress_colour}]${pip_filled}"
     count=$((count + 1))
   done
 
   # Blocked pips
   count=0
   while [[ "$count" -lt "$blocked_count" ]]; do
-    result="${result}#[fg=${blocked_colour}]${pip_filled}"
+    _add_pip "#[fg=${blocked_colour}]${pip_filled}"
     count=$((count + 1))
   done
 
@@ -104,7 +117,7 @@ render_pips() {
   fi
   count=0
   while [[ "$count" -lt "$pending" ]]; do
-    result="${result}#[fg=${pending_colour}]${pip_empty}"
+    _add_pip "#[fg=${pending_colour}]${pip_empty}"
     count=$((count + 1))
   done
 
