@@ -77,7 +77,13 @@ while true; do
   fi
 
   # Discover session and database
-  db_path=$(find_session_db "$pane_cwd" 2>/dev/null)
+  session_id=$(find_session_id "$pane_cwd")
+  if [ -z "$session_id" ]; then
+    printf '%b\n' "${C_GRAY}tomux: no active session${C_RESET}"
+    sleep "$refresh_interval"
+    continue
+  fi
+  db_path=$(get_session_db_path "$session_id")
   if [ -z "$db_path" ] || [ ! -f "$db_path" ]; then
     printf '%b\n' "${C_GRAY}tomux: no active session${C_RESET}"
     sleep "$refresh_interval"
