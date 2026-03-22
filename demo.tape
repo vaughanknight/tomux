@@ -1,114 +1,92 @@
 # Tomux Demo — VHS Tape
-# Generates demo.gif showing pip progress in tmux status bar
+# Shows Tomux pips updating live inside a tmux session
 # Run: vhs demo.tape
 
 Output demo.gif
 
 Set Shell "bash"
-Set FontSize 14
-Set Width 900
-Set Height 500
+Set FontSize 13
+Set Width 1100
+Set Height 600
 Set Theme "Dracula"
-Set Padding 20
-Set TypingSpeed 40ms
+Set Padding 10
+Set TypingSpeed 30ms
 
-# Title
-Type "# Tomux — AI Agent Progress in tmux"
+# Start a fresh tmux on a separate socket
+Type "tmux -L demo new-session -d -s demo -c ~/GitHub/tomux"
+Enter
+Sleep 1s
+Type "tmux -L demo set -g status-style 'bg=colour236,fg=colour248'"
+Enter
+Sleep 200ms
+Type "tmux -L demo set -g status-right '#(~/GitHub/tomux/scripts/status.sh ~/GitHub/tomux) | %H:%M'"
+Enter
+Sleep 200ms
+Type "tmux -L demo set -g @tomux_show_activity 1"
+Enter
+Sleep 200ms
+Type "tmux -L demo set -g status-interval 2"
+Enter
+Sleep 500ms
+Type "tmux -L demo attach -t demo"
+Enter
+Sleep 2s
+
+# Inside tmux now
+Type "echo '🔲 Tomux Demo — watch the pips in the status bar'"
+Enter
+Sleep 2s
+
+# Init plan
+Type "bash ~/GitHub/tomux/scripts/demo-steps.sh init"
+Enter
+Sleep 4s
+
+# Phase 1 progress
+Type "bash ~/GitHub/tomux/scripts/demo-steps.sh ph1-progress"
+Enter
+Sleep 4s
+
+Type "bash ~/GitHub/tomux/scripts/demo-steps.sh ph1-more"
+Enter
+Sleep 4s
+
+# Complete phase 1
+Type "bash ~/GitHub/tomux/scripts/demo-steps.sh ph1-done"
+Enter
+Sleep 4s
+
+# Phase 2 progress
+Type "bash ~/GitHub/tomux/scripts/demo-steps.sh ph2-progress"
+Enter
+Sleep 4s
+
+# Show the detail pane
+Ctrl+b
+Sleep 300ms
+Shift+t
+Sleep 5s
+
+# Complete phase 2
+Type "bash ~/GitHub/tomux/scripts/demo-steps.sh ph2-done"
+Enter
+Sleep 4s
+
+# Complete phase 3
+Type "bash ~/GitHub/tomux/scripts/demo-steps.sh ph3-done"
+Enter
+Sleep 4s
+
+Type "echo '🔲 github.com/vaughanknight/tomux'"
+Enter
+Sleep 3s
+
+# Clean exit
+Type "exit"
+Enter
+Sleep 500ms
+Type "tmux -L demo kill-server 2>/dev/null; true"
 Enter
 Sleep 1s
 
-# Show what pips look like
-Type "echo ''"
-Enter
-Type "echo '  Status bar examples:'"
-Enter
-Type "echo ''"
-Enter
 
-# Simulate pip rendering with printf colours
-Type@50ms "printf '  \033[32m■■■\033[33m■\033[0m□□  \033[34m■■■■\033[33m■\033[0m□□□  Phase 3: Rendering\n'"
-Enter
-Sleep 1.5s
-
-Type@50ms "printf '  \033[32m■■■■■\033[0m   \033[34m■■\033[33m■\033[0m□□□□  7 subagents running\n'"
-Enter
-Sleep 1.5s
-
-Type@50ms "printf '  \033[34m■■■■■■■■■■\033[0m            All tasks done!\n'"
-Enter
-Sleep 2s
-
-Type "echo ''"
-Enter
-
-# Show installation
-Type "echo '━━━ Installation ━━━'"
-Enter
-Sleep 500ms
-Type "echo ''"
-Enter
-Type@30ms "echo '# Add to ~/.tmux.conf:'"
-Enter
-Type@30ms "echo 'set -g @plugin '\\''vaughanknight/tomux'\\'''"
-Enter
-Type@30ms "echo 'set -g status-right \"#{tomux_status} | %H:%M\"'"
-Enter
-Sleep 2s
-
-Type "echo ''"
-Enter
-
-# Show configuration options
-Type "echo '━━━ Configuration ━━━'"
-Enter
-Sleep 500ms
-Type@30ms "echo '@tomux_pip_filled    ■  (configurable)'"
-Enter
-Type@30ms "echo '@tomux_pip_empty     □  (configurable)'"
-Enter
-Type@30ms "echo '@tomux_show_activity 1  (show phase text)'"
-Enter
-Type@30ms "echo '@tomux_toggle_key    T  (prefix+T for details)'"
-Enter
-Sleep 2s
-
-Type "echo ''"
-Enter
-
-# Simulate the detail pane output
-Type "echo '━━━ Detail Pane (prefix+T) ━━━'"
-Enter
-Sleep 500ms
-Type "echo ''"
-Enter
-Type@20ms "printf '  \033[1m═══ Tomux Progress ═══\033[0m\n'"
-Enter
-Type@20ms "printf '  \033[1mPhase 1: Core\033[0m \033[32m[done]\033[0m\n'"
-Enter
-Type@20ms "printf '    \033[32m✓\033[0m Create helpers.sh\n'"
-Enter
-Type@20ms "printf '    \033[32m✓\033[0m Session discovery\n'"
-Enter
-Type@20ms "printf '    \033[32m✓\033[0m DB query layer\n'"
-Enter
-Type@20ms "printf '  \033[1mPhase 2: Rendering\033[0m \033[33m[in progress]\033[0m\n'"
-Enter
-Type@20ms "printf '    \033[32m✓\033[0m Render pips\n'"
-Enter
-Type@20ms "printf '    \033[32m✓\033[0m Overflow logic\n'"
-Enter
-Type@20ms "printf '    \033[33m◐\033[0m Colour mapping\n'"
-Enter
-Type@20ms "printf '    \033[90m○\033[0m Caching\n'"
-Enter
-Type@20ms "printf '    \033[90m○\033[0m Staleness\n'"
-Enter
-Type@20ms "printf '  \033[1mPhase 3: Integration\033[0m \033[90m[pending]\033[0m\n'"
-Enter
-Sleep 3s
-
-Type "echo ''"
-Enter
-Type@30ms "echo '🔲 github.com/vaughanknight/tomux'"
-Enter
-Sleep 3s
